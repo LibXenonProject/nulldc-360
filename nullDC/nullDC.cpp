@@ -30,6 +30,7 @@
 #define min(a,b) (((a)<(b))?(a):(b))
 
 __settings settings;
+char rootpath[256] = {0};
 
 /*BOOL CtrlHandler( DWORD fdwCtrlType ) 
 { 
@@ -187,10 +188,16 @@ cleanup:
 	return rv;
 }
 
-int main()
+int main(int argc, char **argv)
 {
-	int argc=1;
-	char* argv[] ={"uda:/xenon.elf"};
+	if(argc != 0 && argv[0]) {
+		strcpy(rootpath,argv[0]);
+	} else {
+		strcpy(rootpath,"uda0:/xenon.elf");
+	}
+	
+	int argc__ = 1;
+	char* argv__[] = {rootpath};
 
 	xenos_init(VIDEO_MODE_AUTO);
 	console_init();
@@ -215,7 +222,7 @@ int main()
 
 	__try
 	{
-		rv=main___(argc,argv);
+		rv=main___(argc__,argv__);
 	}
 	//__except( ExeptionHandler( GetExceptionCode(), (GetExceptionInformation()) ) )
 	catch(...)
