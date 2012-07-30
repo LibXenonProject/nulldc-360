@@ -6,7 +6,7 @@
 #include <input/input.h>
 #include <console/console.h>
 #include <console/telnet_console.h>
-#include <diskio/diskio.h>
+#include <diskio/disc_io.h>
 #include <diskio/ata.h>
 #include <usb/usbmain.h>
 #include <time/time.h>

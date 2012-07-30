@@ -70,7 +70,7 @@ bool Read(int XPadPlayer, u32 deviceType, EmulatedDevices::FT0::SStatus* status)
 	if (c->left)	{status->buttons ^= CONT_DPAD_LEFT;}
 	if (c->right)	{status->buttons ^= CONT_DPAD_RIGHT;}
 	
-	if(c->select && c->logo) exit(0);
+	if(c->back && c->logo) exit(0);
 	
 	if(c->lb){
 		enableCapture();
