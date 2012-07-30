@@ -25,6 +25,7 @@
 #include "serial_ipc/serial_ipc_client.h"
 #include "cl/cl.h"
 //#include "emitter/emitter.h"
+#include "mount.h"
 
 #define max(a,b) (((a)>(b))?(a):(b))
 #define min(a,b) (((a)<(b))?(a):(b))
@@ -212,6 +213,9 @@ int main(int argc, char **argv)
 	usb_do_poll();
 	
 	xenon_ata_init();
+	
+	mount_all_devices();
+	findDevices();
 	
 	if (!_vmem_reserve())
 	{
