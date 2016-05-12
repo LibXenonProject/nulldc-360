@@ -204,7 +204,7 @@ void spgVBL()
 				case 'd':
 				{
 					printf("---- dumping dynarec mem pool @%08x\n",dyna_mem_pool);
-					FILE * f=fopen("uda:/nulldc-mempool.bin","wb");
+					FILE * f=fopen("uda0:/nulldc-mempool.bin","wb");
 					if(f){
 						fwrite(dyna_mem_pool,1,DYNA_MEM_POOL_SIZE,f);
 						fclose(f);

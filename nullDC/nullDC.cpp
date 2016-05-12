@@ -6,7 +6,7 @@
 #include <input/input.h>
 #include <console/console.h>
 #include <console/telnet_console.h>
-#include <diskio/diskio.h>
+#include <diskio/disc_io.h>
 #include <diskio/ata.h>
 #include <usb/usbmain.h>
 #include <time/time.h>
@@ -25,11 +25,13 @@
 #include "serial_ipc/serial_ipc_client.h"
 #include "cl/cl.h"
 //#include "emitter/emitter.h"
+#include "mount.h"
 
 #define max(a,b) (((a)>(b))?(a):(b))
 #define min(a,b) (((a)<(b))?(a):(b))
 
 __settings settings;
+char rootpath[256] = {0};
 
 /*BOOL CtrlHandler( DWORD fdwCtrlType ) 
 { 
@@ -187,10 +189,16 @@ cleanup:
 	return rv;
 }
 
-int main()
+int main(int argc, char **argv)
 {
-	int argc=1;
-	char* argv[] ={"uda:/xenon.elf"};
+	if(argc != 0 && argv[0]) {
+		strcpy(rootpath,argv[0]);
+	} else {
+		strcpy(rootpath,"uda0:/xenon.elf");
+	}
+	
+	int argc__ = 1;
+	char* argv__[] = {rootpath};
 
 	xenos_init(VIDEO_MODE_AUTO);
 	console_init();
@@ -206,6 +214,9 @@ int main()
 	
 	xenon_ata_init();
 	
+	mount_all_devices();
+	findDevices();
+	
 	if (!_vmem_reserve())
 	{
 		msgboxf(_T"Unable to reserve nullDC memory ...",MBX_OK | MBX_ICONERROR);
@@ -215,7 +226,7 @@ int main()
 
 	__try
 	{
-		rv=main___(argc,argv);
+		rv=main___(argc__,argv__);
 	}
 	//__except( ExeptionHandler( GetExceptionCode(), (GetExceptionInformation()) ) )
 	catch(...)

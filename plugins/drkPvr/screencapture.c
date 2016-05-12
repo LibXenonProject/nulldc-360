@@ -40,7 +40,7 @@ void doScreenCapture() {
         }
 
         char filename[256];
-        sprintf(filename, "uda:/sshot_%08x.png", rand());
+        sprintf(filename, "uda0:/sshot_%08x.png", rand());
 
         FILE *outfp = fopen(filename, "wb");
 
